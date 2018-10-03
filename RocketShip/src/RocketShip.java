@@ -12,7 +12,6 @@ public class RocketShip {
         cone();
 
 
-
         //EVERYTHING BELOW THIS POINT IS SIMPLY HARDCODE TEST PROGRAMS
 
 /*
@@ -28,29 +27,51 @@ public class RocketShip {
             System.out.println();
             */
 
+
+/*
         for (int row = 1; row < (testSize / 2); row++) {
             System.out.print("|");
-            for (int dot = 0; dot <= (testSize - ((2 * row) / 2)); dot ++)
+            for (int dot = testSize; dot > (testSize - (testSize - row)); dot--)
                 System.out.print(".");
-            for (int slash = 1; slash <= (row * 2); slash++)
+            for (int slash = 1; slash <= ((row * 2) / 2); slash++)
                 System.out.print("/\\");
             System.out.print("|");
+            System.out.println();
+*/
 
-        }
+for (int row = 1; row <= (testSize / 2); row++) {
+    for (int a = 0; a < ((testSize - (row * 2)) / 2); a++)
+        System.out.print(".");
+    for (int slash = 1; slash <= (row); slash++)
+        System.out.print("/\\");
+    for (int coreSize = 0; coreSize < 2; coreSize++) {
+        for (int a = 0; a < ((testSize - (row * 2)) / 2); a++)
+            System.out.print(".");
+    }
+    for (int slash = 1; slash <= ((row * 2) / 2); slash++)
+        System.out.print("/\\");
+    for (int a = 0; a < ((testSize - (row * 2)) / 2); a++)
+        System.out.print(".");
+
+
+    System.out.println();
+
+}
+
     }
 
 
     public static void cone() {
-        for (int row = 1; row < SIZE; row++) {
-            for (int a = 0; a <= (SIZE - (row + 1)); a++)
+    for (int row = 1; row < SIZE; row++) {
+        for (int a = 0; a <= (SIZE - (row + 1)); a++)
                 System.out.print(" ");
-            for (int b = 0; b < row; b++)
+        for (int b = 0; b < row; b++)
                 System.out.print("/");
-            for (int c = 0; c < 2; c++)
+        for (int c = 0; c < 2; c++)
                 System.out.print("*");
-            for (int b = 0; b < row; b++)
-                System.out.print("\\");
-            System.out.println();
+        for (int b = 0; b < row; b++)
+            System.out.print("\\");
+        System.out.println();
 
         }
     }
