@@ -13,10 +13,9 @@ import java.sql.SQLOutput;
 public class RocketShipHomeworkFinalProduct {
 
     // SIZE is the base unit for the size of the rocket, representing half of the horizontal measurement
-    public static final int SIZE = 3;
-    // ODDFIX is a variable used to make the rocket still scale up while remaining proportional when SIZE is odd
-    public static final int ODDFIX = SIZE % 2;
+    public static final int SIZE = 11;
 
+   //Main Rocket Build
     public static void main(String[] args) {
 
         // The integer value testSize is purely for dev hardcode testing
@@ -37,8 +36,8 @@ public class RocketShipHomeworkFinalProduct {
 
     // Cone Build
     public static void cone() {
-        for (int row = 1; row < SIZE; row++) {
-            for (int a = 0; a <= (SIZE - (row + 1)); a++)
+        for (int row = 1; row < (SIZE * 2); row++) {
+            for (int a = 0; a <= ((SIZE * 2) - (row + 1)); a++)
                 System.out.print(" ");
             for (int b = 0; b < row; b++)
                 System.out.print("/");
@@ -72,7 +71,7 @@ public class RocketShipHomeworkFinalProduct {
     // =*=* barrier between sections of the rocket
     public static void seal() {
         System.out.print("+");
-        for (int row = 1; row <= SIZE; row++)
+        for (int row = 1; row <= (SIZE * 2); row++)
             System.out.print("=*");
         System.out.print("+");
         System.out.println();
@@ -80,25 +79,20 @@ public class RocketShipHomeworkFinalProduct {
 
     // Downward Pointing Core
     public static void bottomCore() {
-        for (int row = (SIZE / 2); row >= 1; row--) {
+        for (int row = SIZE; row >= 1; row--) {
             System.out.print("|");
-            for (int a = ((SIZE - (row * 2)) / 2); a > 0; a--)
-                System.out.print(".");
-            for (int slash = row; slash >= 1; slash--)
-                System.out.print("\\/");
-            for (int coreSize = 2; coreSize > 0; coreSize--) {
-                for (int a = ((SIZE - (row * 2)) / 2); a > 0; a--)
+            for (int halves = 1; halves <= 2; halves++) {
+                for (int a = ((SIZE - row)); a > 0; a--)
+                    System.out.print(".");
+                for (int slash = row; slash >= 1; slash--)
+                    System.out.print("\\/");
+                for (int a = ((SIZE - row)); a > 0; a--)
                     System.out.print(".");
             }
-            if (ODDFIX == 1)
-                System.out.print("..");
-            for (int slash = ((row * 2) / 2); slash >= 1; slash--)
-                System.out.print("\\/");
-            for (int a = ((SIZE - (row * 2)) / 2); a > 0; a--)
-                System.out.print(".");
             System.out.print("|");
             System.out.println();
         }
     }
+
 }
 
