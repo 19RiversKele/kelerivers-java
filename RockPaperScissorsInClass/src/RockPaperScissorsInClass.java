@@ -5,7 +5,7 @@ public class RockPaperScissorsInClass {
     public static int WINS = 0;
     public static int TIES = 0;
     public static int LOSSES = 0;
-    public static int TIE_ROUND_CONTROL = 0;
+
 
     public static void main(String[] args) {
         Scanner userName = new Scanner(System.in);
@@ -19,6 +19,10 @@ public class RockPaperScissorsInClass {
         playAGame = playAGame.toLowerCase();
 
         while (playAGame.equals("yes")) {
+
+            WINS = 0;
+            TIES = 0;
+            LOSSES = 0;
 
             System.out.println("How many rounds would you like to play? 3 or 5?");
             Scanner numberOfRounds = new Scanner(System.in);
@@ -45,7 +49,16 @@ public class RockPaperScissorsInClass {
                 roundNumber++;
             }
 
-            //UPDATE SCOREBOARD HERE
+            System.out.println("********************************");
+            if (WINS > LOSSES) {
+                System.out.println("USER HAS WON THE GAME!");
+            } else {
+                System.out.println("COMPUTER HAS WON THE GAME!");
+            }
+            System.out.println("Rounds won by user: " + WINS);
+            System.out.println("Rounds won by computer: " + LOSSES);
+            System.out.println("Rounds tied: " + TIES);
+            System.out.println("********************************\n");
 
             System.out.println("Would you like to play again? Yes or no?");
             playAGame = playGame.next();
