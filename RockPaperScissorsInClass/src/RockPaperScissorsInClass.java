@@ -66,6 +66,8 @@ public class RockPaperScissorsInClass {
 
         }
 
+        System.out.println("Thank you for playing!");
+
     }
 
     public static String userChoice() {
