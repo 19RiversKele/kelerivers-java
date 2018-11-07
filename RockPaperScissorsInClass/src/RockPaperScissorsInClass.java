@@ -52,7 +52,7 @@ public class RockPaperScissorsInClass {
                 String roundResult = (getResults(userWeapon, computerChoice));
                 System.out.println(roundResult);
              //Round does not count if tie
-                if (roundResult.equals("TIED GAME") || roundResult.equals("---ERROR DETERMINING WINNER---")) {
+                if (roundResult.equals("TIED GAME") || roundResult.equals("---ERROR DETERMINING WINNER---Invalid Rock/Paper/Scissors Input---")) {
                     roundNumber--;
                 }
 
@@ -110,24 +110,24 @@ public class RockPaperScissorsInClass {
             return("TIED GAME");
         } else if (userChoice.equals("rock") && computerChoice.equals("paper")) {
             LOSSES++;
-            return("COMPUTER WINS!");
+            return("Paper beats Rock\nCOMPUTER WINS!");
         } else if (userChoice.equals("rock") && computerChoice.equals("scissors")) {
             WINS++;
-            return("USER WINS!");
+            return("Rock beats Scissors\nUSER WINS!");
         } else if (userChoice.equals("paper") && computerChoice.equals("scissors")) {
             LOSSES++;
-            return("COMPUTER WINS!");
+            return("Scissors beats Paper\nCOMPUTER WINS!");
         } else if (userChoice.equals("paper") && computerChoice.equals("rock")) {
             WINS++;
-            return("USER WINS!");
+            return("Paper beats Rock\nUSER WINS!");
         } else if (userChoice.equals("scissors") && computerChoice.equals("rock")) {
             LOSSES++;
-            return("COMPUTER WINS!");
+            return("Rock beats Scissors\nCOMPUTER WINS!");
         } else if (userChoice.equals("scissors") && computerChoice.equals("paper")) {
             WINS++;
-            return("USER WINS!");
+            return("Scissors beats Paper\nUSER WINS!");
         } else {
-            return("---ERROR DETERMINING WINNER---");
+            return("---ERROR DETERMINING WINNER---Invalid Rock/Paper/Scissors Input---");
         }
     }
 }
