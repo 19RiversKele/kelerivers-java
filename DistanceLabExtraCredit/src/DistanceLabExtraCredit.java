@@ -31,12 +31,14 @@ public class DistanceLabExtraCredit {
     }
 
     public static void singleDigitToDoubleDigitFix(String coordinate1, String coordinate2) {
-        char coordOneCheck = coordinate1.charAt(5);
-        char coordTwoCheck = coordinate2.charAt(5);
-        if (Character.isDigit(coordOneCheck)) {
+        char coordOneCheck = coordinate1.charAt(4);
+        System.out.println(coordOneCheck);
+        char coordTwoCheck = coordinate2.charAt(4);
+        System.out.println(coordTwoCheck);
+        if (Character.isDigit(coordOneCheck) == true) {
             COORDINATE1 = "0" + COORDINATE1;
         }
-        if (Character.isDigit(coordTwoCheck)) {
+        if (Character.isDigit(coordTwoCheck) == true) {
             COORDINATE2 = "0" + COORDINATE2;
         }
     }
