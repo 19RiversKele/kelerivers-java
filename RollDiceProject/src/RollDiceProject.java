@@ -9,39 +9,57 @@ public class RollDiceProject {
         String playAgain = playGame.next();
         playAgain = playAgain.toLowerCase();
         String dice[][] = defDice();
-        //System.out.println(dice[1]);
-        printAllDice();
-       while (playAgain.equals("yes")) {
+        printAllDice(dice);
+        while (playAgain.equals("yes")) {
 
-           rollDice();
-           printDice();
-           drawLine();
-           System.out.println("Would you like to play again? (Yes or no)?");
-           playAgain = playGame.next();
-           playAgain = playAgain.toLowerCase();
+            int diceNum = rollDice();
+            printDice(diceNum, dice);
+            drawLine();
+            System.out.println("Would you like to play again? (Yes or no)?");
+            playAgain = playGame.next();
+            playAgain = playAgain.toLowerCase();
 
-       }
+        }
     }
 
-    public static void printAllDice() {
+    public static void printAllDice(String[][] dicePrinter) {
+        for (int diceNum = 0; diceNum < 6; diceNum++) {
+            for (int row = 0; row < 5; row++) {
+                System.out.println(dicePrinter[row][diceNum]);
+            }
+            System.out.println();
+        }
+
         System.out.println("printAllDice");
     }
 
     public static String[][] defDice() {
         System.out.println("defDice");
-        String defineDice[][] = new String[6][1];
+        String defineDice[][] = new String[5][6];
+        String topBottom[] = {" ------- ", " ------- ", " ------- ", " ------- ", " ------- ", " ------- "};
+        String topThird[] = {"|       |","| *     |", "| *     |","|  * *  |", "|  * *  |", "|  * *  |"};
+        String middleThird[] = {"|   *   |", "|       |", "|   *   |", "|       |", "|   *   |", "|  * *  |"};
+        String bottomThird[] = {"|       |", "|     * |", "|     * |", "|  * *  |", "|  * *  |", "|  * *  |"};
+        defineDice[0] = topBottom;
+        defineDice[1] = topThird;
+        defineDice[2] = middleThird;
+        defineDice[3] = bottomThird;
+        defineDice[4] = topBottom;
         return(defineDice);
 
     }
 
-    public static void printDice() {
+    public static void printDice(int rolledNum, String[][] faces) {
         System.out.println("printDice");
+
 
     }
 
     public static int rollDice() {
+        Random roll = new Random();
+        int result = roll.nextInt(6) + 1;
         System.out.println("rollDice");
-        return(-1);
+        return(result);
 
     }
 
