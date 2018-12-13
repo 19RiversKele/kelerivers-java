@@ -1,45 +1,43 @@
 import java.util.Scanner;
 
 public class FracCalc {
+
+    public static String OPERATOR = " ";
     public static void main(String[] args) {
+
+        String[][] core = new String[3][3];
+
         Scanner equationInput = new Scanner(System.in);
-        Scanner calculate = new Scanner(System.in);
+        String equation = "-";
+        while (!equation.equals("quit")) {
+            System.out.println("Input an equation. Type \"quit\" to cancel.");
+            String test = equationInput.next();
+            if (!test.equals("quit")) {
+                String test1 = equationInput.next();
+                String test2 = equationInput.next();
+                System.out.println(test);
+                System.out.println(test1);
+                System.out.println(test2);
+                OPERATOR = test1;
+                parseWhole(test, test2, core);
 
-        System.out.println("Would you like to calculate fractions?");
-        String calculateAgain = calculate.next();
-
-        while (calculateAgain.equals("yes")) {
-
-            System.out.println("Input an equation");
-            String equation = equationInput.nextLine();
-
-            loopThroughInitial(equation);
-
-            System.out.println("Would you like to calculate more fractions? If not type \"quit\" to exit.");
-            calculateAgain = calculate.next();
-            if (!calculateAgain.equals("quit")) {
-                while (!calculateAgain.equals("yes")) {
-                    System.out.println("Would you like to calculate more fractions? If not type \"quit\" to exit.");
-                    calculateAgain = calculate.next();
-                    if (calculateAgain.equals("quit"))
-                        break;
-                }
             }
-
-
-
-        }
-    }
-
-    public static void loopThroughInitial(String initial) {
-        initial = initial + " ";
-        String loopThrough = "";
-        for (int i = 0; i < initial.length(); i++) {
-            loopThrough = loopThrough + initial.charAt(i);
-            if (initial.charAt(i) == ' ') {
-                System.out.println(loopThrough);
-                loopThrough = "";
+            if (test.equals("quit")) {
+                equation = test;
             }
         }
     }
+
+    public static void parseWhole(String first, String second, String[][] coreInput) {
+
+    }
+
+    public static void parseNumerator() {
+
+    }
+
+    public static void parseDenominator() {
+
+    }
+
 }
