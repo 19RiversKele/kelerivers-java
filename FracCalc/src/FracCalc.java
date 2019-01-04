@@ -1,27 +1,43 @@
+/*
+*********************************************
+* Kele Rivers                               *
+* AP CS A                                   *
+* Period 1                                  *
+* 4 January, 2019                           *
+* Project: FracCalc                         *
+*********************************************
+ */
+
 import java.util.Scanner;
 
 public class FracCalc {
-
+    //OPERATOR stores the operation being done (+-*/)
+    //ADDSUB when of value one allows only for the process of adding, subtracting, or multiplying whole numbers only
     public static String OPERATOR = " ";
-    public static int DIVISIONNUMLESSTHANDEMFIXNUM = 0;
-    public static int DIVISIONNUMLESSTHANDEMFIXDEM = 0;
+    public static int ADDSUB = 0;
+
     public static void main(String[] args) {
-
+        //core stores inputted values and the answer
         String[][] core = new String[3][3];
-
+        //Sets up scanner for the equation
         Scanner equationInput = new Scanner(System.in);
         String equation = "-";
+        //As long as the user keeps putting in equations program keeps running
         while (!equation.equals("quit")) {
-            DIVISIONNUMLESSTHANDEMFIXNUM = 0;
-            DIVISIONNUMLESSTHANDEMFIXDEM = 0;
+            //ADDSUB and OPERATOR reset for new equations
+            ADDSUB = 0;
+            OPERATOR = " ";
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    core[i][j] = null;
+                }
+            }
+            //User asked for an equation and operations run on it
             System.out.println("Input an equation. Type \"quit\" to cancel.");
             String firstNumber = equationInput.next();
             if (!firstNumber.equals("quit")) {
                 String operatorID = equationInput.next();
                 String secondNumber = equationInput.next();
-                //System.out.println(firstNumber);
-                //System.out.println(operatorID);
-                //System.out.println(secondNumber);
                 OPERATOR = operatorID;
                 parseWhole(firstNumber, secondNumber, core);
                 parseNumerator(firstNumber, secondNumber, core);
@@ -34,12 +50,14 @@ public class FracCalc {
                 //System.out.println(core[2][0] + " " + core[2][1] + " " + core[2][2]);
 
             }
+            //Ends program if user types "quit"
             if (firstNumber.equals("quit")) {
                 equation = firstNumber;
             }
         }
     }
 
+    //Parses out the whole number in both parts of the equation
     public static void parseWhole(String first, String second, String[][] coreInput) {
         String whole = "";
         int underscoreIndex = underscoreIndexer(first);
@@ -70,6 +88,7 @@ public class FracCalc {
 
     }
 
+    //Finds the index of the underscore if present
     public static int underscoreIndexer(String input) {
         int underscoreIndex = -1;
         if (input.contains("_")) {
@@ -81,7 +100,7 @@ public class FracCalc {
 
     }
 
-
+    //Takes any numerators present from the equation, inputs into core[][]
     public static void parseNumerator(String first, String second, String[][] coreInput) {
         int slashIndex = first.indexOf("/");
         String numerator = "";
@@ -116,6 +135,7 @@ public class FracCalc {
         //System.out.println("SECOND NUMERATOR IS " + numerator);
     }
 
+    //Finds the denominators of the equation if present, inputs into core[][]
     public static void parseDenominator(String first, String second, String[][] coreInput) {
         String denominator = "";
         if (first.contains("/")) {
@@ -136,6 +156,7 @@ public class FracCalc {
         //System.out.println("SECOND DENOMINATOR IS " + denominator);
     }
 
+    //Determines the operation to be done based off of OPERATOR, creates intCore[][] for easier calculation of integers
     public static void operate(String[][] coreInput) {
         int[][] intCore = new int[2][3];
 
@@ -161,6 +182,7 @@ public class FracCalc {
         }
     }
 
+    //If OPERATOR is "+", the parts are added based off of all possible input combinations of positive, negative, fraction, whole, and mixed inputs
     public static void add(int[][] intInput, String[][] coreInput) {
         int w1 = 0;
         int a = 0;
@@ -186,18 +208,19 @@ public class FracCalc {
                 //System.out.println("a is " + a);
                 intInput[0][1] = a;
                 //coreInput[0][1] = convertA;
+                //System.out.println(a);
             }
 
         }
         if (intInput[1][0] != 0 && intInput[1][1] != 0) {
-            if (intInput[0][0] > 0) {
+            if (intInput[1][0] > 0) {
                 c = ((intInput[1][0] * intInput[1][2]) + intInput[1][1]);
                 String convertC = Integer.toString(c);
                 //System.out.println("C is " + c);
                 intInput[1][1] = c;
                 //coreInput[1][1] = convertC;
             }
-            if (intInput[0][0] < 0) {
+            if (intInput[1][0] < 0) {
                 c = ((intInput[1][0] * intInput[1][2]) - intInput[1][1]);
                 String convertC = Integer.toString(c);
                 //System.out.println("C is " + c);
@@ -210,6 +233,7 @@ public class FracCalc {
             aW = (intInput[0][0] + intInput[1][0]);
             String convert_aW = Integer.toString(aW);
             coreInput[2][0] = convert_aW;
+            ADDSUB = 1;
         }
         if (intInput[0][1] != 0 && intInput[1][1] != 0) {
             int tempB = intInput[0][2];
@@ -254,6 +278,7 @@ public class FracCalc {
 
     }
 
+    //If OPERATOR is "-", the parts are subtracted based off all possible combinations of positive, negative, whole, fraction, and mixed
     public static void subtract(int[][] intInput, String[][] coreInput) {
         int w1 = 0;
         int a = 0;
@@ -304,6 +329,8 @@ public class FracCalc {
             aW = (intInput[0][0] - intInput[1][0]);
             String convert_aW = Integer.toString(aW);
             coreInput[2][0] = convert_aW;
+            //System.out.println(aW);
+            ADDSUB = 1;
         }
         if (intInput[0][1] != 0 && intInput[1][1] != 0) {
             int tempB = intInput[0][2];
@@ -346,6 +373,7 @@ public class FracCalc {
 
     }
 
+    //If OPERATOR is "*", inputs are multiplied based off of all possible combinations of positive, negative, whole, fraction, or mixed
     public static void multiply(int[][] intInput, String[][] coreInput) {
         int w1 = 0;
         int a = 0;
@@ -376,14 +404,14 @@ public class FracCalc {
 
         }
         if (intInput[1][0] != 0 && intInput[1][1] != 0) {
-            if (intInput[0][0] > 0) {
+            if (intInput[1][0] > 0) {
                 c = ((intInput[1][0] * intInput[1][2]) + intInput[1][1]);
                 String convertC = Integer.toString(c);
                 //System.out.println("C is " + c);
                 intInput[1][1] = c;
                 //coreInput[1][1] = convertC;
             }
-            if (intInput[0][0] < 0) {
+            if (intInput[1][0] < 0) {
                 c = ((intInput[1][0] * intInput[1][2]) - intInput[1][1]);
                 String convertC = Integer.toString(c);
                 //System.out.println("C is " + c);
@@ -397,6 +425,7 @@ public class FracCalc {
             aW = (intInput[0][0] * intInput[1][0]);
             String convert_aW = Integer.toString(aW);
             coreInput[2][0] = convert_aW;
+            ADDSUB = 1;
         }
         if (intInput[0][1] != 0 && intInput[1][1] != 0) {
             aN = (intInput[0][1] * intInput[1][1]);
@@ -429,6 +458,7 @@ public class FracCalc {
 
     }
 
+    //If OPERATOR is "/", inputs are divided based off all possible combinations of positive, negative, whole, fraction, or mixed
     public static void divide(int[][] intInput, String[][] coreInput) {
         int w1 = 0;
         int a = 0;
@@ -476,15 +506,11 @@ public class FracCalc {
 
         }
         if (intInput[0][1] == 0 && intInput[1][1] == 0) {
-            aW = (intInput[0][0] / intInput[1][0]);
-            String convert_aW = Integer.toString(aW);
-            if (aW != 0) {
-                coreInput[2][0] = convert_aW;
-            } else {
-                DIVISIONNUMLESSTHANDEMFIXNUM = intInput[0][0];
-                DIVISIONNUMLESSTHANDEMFIXDEM = intInput[1][0];
 
-            }
+            coreInput[0][0] = Integer.toString(intInput[0][0]);
+            coreInput[1][0] = Integer.toString(intInput[1][0]);
+
+
 
         }
         if (intInput[0][1] != 0 && intInput[1][1] != 0) {
@@ -506,98 +532,160 @@ public class FracCalc {
             coreInput[2][2] = convert_dTo_aD;
         }
         if (intInput[0][1] != 0 && intInput[1][1] == 0) {
-            aN = (intInput[1][0] * intInput[0][2]);
+            aN = (intInput[0][1]);
             String convert_aN = Integer.toString(aN);
             coreInput[2][1] = convert_aN;
-            String convert_bTo_aD = Integer.toString(intInput[0][1]);
+            aD = (intInput[1][0] * intInput[0][2]);
+            String convert_bTo_aD = Integer.toString(aD);
             coreInput[2][2] = convert_bTo_aD;
         }
 
     }
 
+    //Simplifies the answers given by the above operations
     public static void simplify(String[][] coreInput) {
 
-        if (coreInput[2][1] != null) {
+        //If not only whole numbers were added, subtracted, or multiplied
+        if (ADDSUB == 0) {
+
+            //If a numerator is present in the answer row of core[][]
+            if (coreInput[2][1] != null) {
 
 
-            int numerator = Integer.parseInt(coreInput[2][1]);
-            int denominator = Integer.parseInt(coreInput[2][2]);
-            int whole = 0;
+                int numerator = Integer.parseInt(coreInput[2][1]);
+                int denominator = Integer.parseInt(coreInput[2][2]);
+                int whole = 0;
 
-            //System.out.println(numerator);
-            //System.out.println(denominator);
-
-            if (Math.abs(numerator) >= Math.abs(denominator)) {
-                whole = (numerator / denominator);
-                numerator = (numerator - (whole * denominator));
-                //System.out.println("NUMERATOR IS " + numerator + " WHOLE IS " + whole + " DENOMINATOR IS " + denominator);
-            }
-
-            if (numerator != 0 && denominator % numerator == 0) {
-                denominator /= numerator;
-                numerator = 1;
-            } else {
-                int testForSimplified = 1;
-                while (testForSimplified == 1) {
-                    testForSimplified = 0;
-                    for (int i = 2; i <= numerator; i++) {
-                        if ((numerator % i == 0) && (denominator % i == 0)) {
-                            testForSimplified = 1;
-                            int endVar = numerator;
-                            numerator /= i;
-                            denominator /= i;
-                            i = endVar;
+                //Determines if answer fraction is improper, if so gives out a whole number and adjusts the numerator if so
+                if (Math.abs(numerator) >= Math.abs(denominator)) {
+                    whole = (numerator / denominator);
+                    numerator = (numerator - (whole * denominator));
+                    //System.out.println("NUMERATOR IS " + numerator + " WHOLE IS " + whole + " DENOMINATOR IS " + denominator);
+                }
+                //Tests if answer can be simplified to 1/x, if not simplifies numerator and denominator
+                if (numerator != 0 && denominator % numerator == 0) {
+                    denominator /= numerator;
+                    numerator = 1;
+                } else {
+                    int testForSimplified = 1;
+                    while (testForSimplified == 1) {
+                        testForSimplified = 0;
+                        for (int i = 2; i <= numerator; i++) {
+                            if ((numerator % i == 0) && (denominator % i == 0)) {
+                                testForSimplified = 1;
+                                int endVar = numerator;
+                                numerator /= i;
+                                denominator /= i;
+                                i = endVar;
+                            }
                         }
                     }
                 }
+                //Next four int statements remove double negatives
+                if (denominator < 0 && numerator > 0) {
+                    numerator *= -1;
+                    denominator *= -1;
+                }
+
+                if (whole < 0 && numerator < 0 && denominator > 0) {
+                    numerator *= -1;
+                }
+
+                if (numerator < 0 && denominator < 0) {
+                    numerator *= -1;
+                    denominator *= -1;
+                }
+
+                if (numerator > 0 && denominator < 0) {
+                    numerator *= -1;
+                    denominator *= -1;
+                }
+                //Sends answers to core[][]
+                coreInput[2][0] = Integer.toString(whole);
+                coreInput[2][1] = Integer.toString(numerator);
+                coreInput[2][2] = Integer.toString(denominator);
+            } else {
+                //This is if working with whole numbers that were divided
+
+                int numerator = Integer.parseInt(coreInput[0][0]);
+                int denominator = Integer.parseInt(coreInput[1][0]);
+                int whole = 0;
+
+                if (Math.abs(numerator) >= Math.abs(denominator)) {
+                    whole = (numerator / denominator);
+                    numerator = (numerator - (whole * denominator));
+                    //System.out.println("NUMERATOR IS " + numerator + " WHOLE IS " + whole + " DENOMINATOR IS " + denominator);
+                }
+
+                if (numerator != 0 && denominator % numerator == 0) {
+                    denominator /= numerator;
+                    numerator = 1;
+                } else {
+                    int testForSimplified = 1;
+                    while (testForSimplified == 1) {
+                        testForSimplified = 0;
+                        for (int i = 2; i <= numerator; i++) {
+                            if ((numerator % i == 0) && (denominator % i == 0)) {
+                                testForSimplified = 1;
+                                int endVar = numerator;
+                                numerator /= i;
+                                denominator /= i;
+                                i = endVar;
+                            }
+                        }
+                    }
+                }
+                //Gets rid of double negatives
+                if (denominator < 0 && numerator > 0) {
+                    numerator *= -1;
+                    denominator *= -1;
+                }
+
+                if (whole < 0 && numerator < 0 && denominator > 0) {
+                    numerator *= -1;
+                }
+
+                if (numerator < 0 && denominator < 0) {
+                    numerator *= -1;
+                    denominator *= -1;
+                }
+
+                if (numerator > 0 && denominator < 0) {
+                    numerator *= -1;
+                    denominator *= -1;
+                }
+                //Sends answers to core[][]
+                coreInput[2][0] = Integer.toString(whole);
+                coreInput[2][1] = Integer.toString(numerator);
+                coreInput[2][2] = Integer.toString(denominator);
             }
-
-            if (denominator < 0 && numerator > 0) {
-                numerator *= -1;
-                denominator *= -1;
-            }
-
-            if (whole < 0 && numerator < 0 && denominator > 0) {
-                numerator *= -1;
-            }
-
-
-
-
-
-
-
-            coreInput[2][0] = Integer.toString(whole);
-            coreInput[2][1] = Integer.toString(numerator);
-            coreInput[2][2] = Integer.toString(denominator);
         }
 
     }
 
+    //Prints answer depending on the simplified values stored in core[][] under the answer row
     public static void printAnswer(String[][] coreInput) {
-        //System.out.println(DIVISIONNUMLESSTHANDEMFIXDEM);
-        if (DIVISIONNUMLESSTHANDEMFIXDEM == 0) {
-            int whole = 0;
-            int numerator = 0;
-            int denominator = 0;
 
-            if (coreInput[2][0] != null)
-                whole = Integer.parseInt(coreInput[2][0]);
-            if (coreInput[2][1] != null)
-                numerator = Integer.parseInt(coreInput[2][1]);
-            if (coreInput[2][2] != null)
-                denominator = Integer.parseInt(coreInput[2][2]);
+        int whole = 0;
+        int numerator = 0;
+        int denominator = 0;
+        //Based off the compartments of the answer row of core (core[2][0 through 2]), whole, numerator, and denominator are determined for the answer
+        if (coreInput[2][0] != null)
+            whole = Integer.parseInt(coreInput[2][0]);
+        if (coreInput[2][1] != null)
+            numerator = Integer.parseInt(coreInput[2][1]);
+        if (coreInput[2][2] != null)
+            denominator = Integer.parseInt(coreInput[2][2]);
 
-            if (numerator == 0) {
-                System.out.println("Answer: " + whole);
-            } else if (whole == 0) {
-                System.out.println("Answer: " + numerator + "/" + denominator);
-            } else {
-                System.out.println("Answer: " + whole + "_" + numerator + "/" + denominator);
-            }
+        //Prints the answer
+        if (numerator == 0) {
+            System.out.println("Answer: " + whole);
+        } else if (whole == 0) {
+            System.out.println("Answer: " + numerator + "/" + denominator);
         } else {
-            System.out.println("Answer: " + DIVISIONNUMLESSTHANDEMFIXNUM + " / " + DIVISIONNUMLESSTHANDEMFIXDEM);
+            System.out.println("Answer: " + whole + "_" + numerator + "/" + denominator);
         }
+
 
 
     }
